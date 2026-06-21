@@ -4,11 +4,17 @@ import morgan from "morgan";
 import redis from "./config/redis.js";
 import User from "./models/user.model.js";
 import rateLimit from "express-rate-limit";
+import path from "path";
 
 const app = express();
 
 app.use(morgan("dev"));
 app.use(express.json());
+
+app.set("view engine", "ejs");
+app.set("views", path.join(import.meta.dirname, "../views"));
+
+app.use(express.static(path.join(import.meta.dirname, "../public")));
 
 const globalLimiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minute
@@ -24,16 +30,12 @@ const globalLimiter = rateLimit({
 app.use(globalLimiter);
 
 app.get("/", (req, res) => {
-    let sum = 0;
-
-    for(let i = 0; i < 100000000; i++) {
-        sum += i;
-    }
-
-    return res.json({
-        message: "Sum Calculated",
-        data: sum
-    })
+  res.render("index", {
+    username: "Utkarsh Verma",
+    handle: "whois.utkarsh_",
+    bio: "Something about the user — a short line that gives a sense of who they are and what they care about.",
+    profilePic: "/Utkarsh.jpg"
+  });
 })
 
 app.get("/user/:id", async (req, res) => {
