@@ -1,7 +1,6 @@
 import mongoose, { connections } from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import User from "../src/models/user.model.js";
-import { describe } from "node:test";
 
 let mongoServer;
 
