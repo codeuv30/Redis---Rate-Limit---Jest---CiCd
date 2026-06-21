@@ -5,6 +5,9 @@ import redis from "./config/redis.js";
 import User from "./models/user.model.js";
 import rateLimit from "express-rate-limit";
 import path from "path";
+import dns from "dns";
+
+dns.setServers(["1.1.1.1", "8.8.8.8"])
 
 const app = express();
 
